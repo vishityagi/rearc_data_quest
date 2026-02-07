@@ -20,9 +20,15 @@ HEADERS = {
 
 
 def handler(event=None, context=None):
-    page_to_parse = '/pub/time.series/pr'
+    # Allow override from event (optional, future-proof)
+    page_to_parse = (
+        event.get("page", "/pub/time.series/pr")
+        if event else "/pub/time.series/pr"
+    )
+
     remote_files = list_remote_files(page=page_to_parse)
     s3_files = list_s3_files()
+
     print(f"Remote files: {remote_files}")
     print(f"S3 files: {s3_files}")
 
@@ -31,13 +37,19 @@ def handler(event=None, context=None):
         if upload_if_needed(f):
             uploaded += 1
 
-    for f in s3_files - remote_files:
-        s3.delete_object(Bucket=BUCKET, Key=f"{PREFIX}{f}")
+    deleted = s3_files - remote_files
+    for f in deleted:
+        s3.delete_object(
+            Bucket=BUCKET,
+            Key=f"{PREFIX}{f}"
+        )
 
     return {
+        "job": "bls_sync",
         "uploaded": uploaded,
-        "deleted": len(s3_files - remote_files)
+        "deleted": len(deleted)
     }
+
 
 
 def list_remote_files(page):
