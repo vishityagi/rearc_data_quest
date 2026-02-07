@@ -4,7 +4,7 @@ resource "aws_lambda_function" "ingestion" {
   role          = aws_iam_role.lambda_role.arn
   handler       = "app.lambdas.ingestion_lambdas.handler"
   filename      = var.lambda_zip_path
-  source_code_hash = filebase64sha256("../../lambda_package.zip") # Ensures updates are detected when the ZIP file changes
+  source_code_hash = filebase64sha256("../../bls_ingestion_lambda.zip") # Ensures updates are detected when the ZIP file changes
 
 
   timeout      = 120

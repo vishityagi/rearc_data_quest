@@ -12,8 +12,8 @@ $ANALYTICS_BUILD = "analytics_lambda_build"
 # -----------------------------
 Write-Host "Cleaning old build directories..."
 
-Remove-Item -Recurse -Force $INGESTION_BUILD -ErrorAction SilentlyContinue
-Remove-Item -Recurse -Force $ANALYTICS_BUILD -ErrorAction SilentlyContinue
+# Remove-Item -Recurse -Force $INGESTION_BUILD -ErrorAction SilentlyContinue
+# Remove-Item -Recurse -Force $ANALYTICS_BUILD -ErrorAction SilentlyContinue
 Remove-Item $INGESTION_ZIP -ErrorAction SilentlyContinue
 Remove-Item $ANALYTICS_ZIP -ErrorAction SilentlyContinue
 
@@ -61,3 +61,6 @@ tar -tf $INGESTION_ZIP | Select-Object -First 10
 tar -tf $ANALYTICS_ZIP | Select-Object -First 10
 
 Write-Host "`nBuild completed successfully."
+
+Remove-Item -Recurse -Force $INGESTION_BUILD -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force $ANALYTICS_BUILD -ErrorAction SilentlyContinue
