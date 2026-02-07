@@ -12,3 +12,8 @@ variable "bucket_name" {
 variable "lambda_zip_path" {
   description = "Path to Lambda ZIP file"
 }
+
+variable "analytics_lambda_zip_path" {
+  description = "Path to analytics consumer lambda zip"
+}
+

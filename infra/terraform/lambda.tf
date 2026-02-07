@@ -1,6 +1,6 @@
 resource "aws_lambda_function" "ingestion" {
   function_name = "bls-ingestion-lambda"
-  runtime       = "python3.11"
+  runtime       = "python3.14"
   role          = aws_iam_role.lambda_role.arn
   handler       = "app.lambdas.ingestion_lambdas.handler"
   filename      = var.lambda_zip_path
