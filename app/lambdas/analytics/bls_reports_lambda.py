@@ -90,9 +90,7 @@ def best_year_per_series(df_csv):
         grouped.groupby("series_id")["value"].idxmax()
     ]
 
-    return best.rename(
-        columns={"year": "best_year", "value": "max_value"}
-    )
+    return best[["series_id", "year", "value"]]
 
 
 def q1_population_report(df_csv, df_json):
