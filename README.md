@@ -221,18 +221,25 @@ The script:
 - Creates deployment-ready ZIP files
 - Cleans up temporary build directories
 
-## Design Decisions
+## Assumptions & Design Choices
+### Assumptions and Observations
 
-- **Terraform** chosen for clarity, portability, and reviewer friendliness
-- **Single-responsibility Lambdas** for ingestion and analytics
-- **Event-driven architecture** using S3 + SQS
-- **No hard-coded filenames** - dynamic file discovery
-- **No notebook execution in production** - logic refactored to Python
-- **AWS-managed Lambda layers** for binary compatibility
+- The DataUSA API is available without authentication and returns a stable JSON schema.
+- Data volumes are small enough to be processed within AWS Lambda memory and timeout limits.
+- Analytical results are sufficient when logged to CloudWatch, without persisting report outputs.
+
+### Design Choices
+
+- Event-driven architecture (S3 → SQS → Lambda) was chosen to decouple ingestion from analytics and align with Part 4 requirements.
+- SQS is used to provide buffering, retries, and failure isolation between ingestion and analytics.
+- Terraform was selected for Infrastructure as Code due to its clarity, portability, and ease of review.
+- Notebook logic was refactored into Python rather than executed directly, following production best practices while meeting Part 3 and Part 4 expectations.
+- Single-file analytics Lambda was intentionally used to keep deployment and packaging simple for this assignment.
+
 
 ## Security
 
-- S3 bucket is private (no public access)
+- S3 bucket is public access - for visibilty. Was created as private with only iam role access, but changed manually for this usecase
 - IAM roles are scoped to required services
 - SQS policies restrict access to the source S3 bucket
 - Root user is used only for initial IAM bootstrapping
