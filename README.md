@@ -267,6 +267,24 @@ rearc_data_quest/
 └── README.md
 ```
 
+## TODOs / Future Improvements
+
+- **Testing**: Add unit tests and integration tests for ingestion and analytics Lambdas (including S3/SQS event simulations).
+- **Retries & DLQ**: Configure SQS redrive policy and a dedicated dead-letter queue for failed analytics events; add explicit retry logic where appropriate.
+- **Error Handling**: Harden error handling in Lambdas (graceful failures, clear log messages, and alerting hooks via CloudWatch Alarms).
+- **Observability**: Add structured logging, metrics, and dashboards (CloudWatch Metrics/Logs Insights) for ingestion and analytics performance.
+- **Configuration**: Externalize runtime configuration (e.g., prefixes, API URLs) via environment variables and/or SSM Parameter Store.
+- **Security Hardening**: Review IAM policies for least privilege and consider KMS encryption for S3/SQS where needed.
+- **Git Hygiene**: Add a `.gitignore` tuned for Python, Terraform, and build artifacts (e.g., `__pycache__/`, `.terraform/`, `*.zip`, virtualenvs).
+
+## AI Assistance
+
+- **README authoring**: AI was used to structure and refine this README, including architecture description, deployment instructions, and documentation of design decisions.
+- **Terraform & AWS guidance**: AI helped suggest example Terraform snippets and AWS configuration patterns (e.g., Lambda layers, S3/SQS wiring).
+- **Bugfixes & refactors**: AI assisted in debugging issues and refining implementation details to better match the intended architecture.
+- **Template & structure generation**: AI was used to create project/file structure templates (e.g., Lambda layout, Terraform modules) which were then adapted and implemented.
+- **Refinement & clarity**: AI assisted in rephrasing and organizing content to be reviewer-friendly while staying faithful to the implemented code. Prompts are not included here, as the interaction was an ongoing back-and-forth rather than a single static input.
+
 ## Summary
 
 This solution demonstrates:
